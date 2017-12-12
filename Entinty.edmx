@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Context.Store" Provider="Oracle.ManagedDataAccess.Client" ProviderManifestToken="11.2" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ADMIN_USERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="38" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NOME" Type="varchar2" MaxLength="100" Nullable="false" />
+          <Property Name="FUNCAO" Type="varchar2" MaxLength="100" Nullable="false" />
+          <Property Name="EMAIL" Type="varchar2" MaxLength="50" />
+          <Property Name="STATUS" Type="number" Precision="2" Scale="0" />
+          <Property Name="DATACRIACAO" Type="timestamp" Precision="6" Nullable="false" />
+          <Property Name="DATAALTERACAO" Type="timestamp" Precision="6" />
+          <Property Name="USER_LOGIN" Type="varchar2" MaxLength="20" Nullable="false" />
+          <Property Name="SENHA_LOGIN" Type="varchar2" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CATEGORIA_PRODUTO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="38" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NOME_CATEGORIA" Type="varchar2" MaxLength="200" Nullable="false" />
+          <Property Name="STATUS" Type="number" Precision="1" Scale="0" Nullable="false" />
+          <Property Name="DATACRIACAO" Type="timestamp" Precision="6" Nullable="false" />
+          <Property Name="DATAALTERACAO" Type="timestamp" Precision="6" />
+        </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="38" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NOME" Type="varchar2" MaxLength="100" />
+          <Property Name="ENDERECO" Type="varchar2" MaxLength="100" />
+          <Property Name="CEP" Type="varchar2" MaxLength="9" />
+          <Property Name="BAIRRO" Type="varchar2" MaxLength="100" />
+          <Property Name="CIDADE" Type="varchar2" MaxLength="50" />
+          <Property Name="UF" Type="varchar2" MaxLength="2" />
+          <Property Name="TELEFONE" Type="varchar2" MaxLength="15" />
+          <Property Name="USUARIO" Type="varchar2" MaxLength="100" Nullable="false" />
+          <Property Name="SENHA" Type="varchar2" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IMG_PRODUTO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="38" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="IMAGEM" Type="blob" Nullable="false" />
+          <Property Name="DESCRICAO" Type="varchar2" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ITEM_NF">
+          <Key>
+            <PropertyRef Name="ID_ITEM_NF" />
+          </Key>
+          <Property Name="ID_NF" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ID_PRODUTO" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="VALOR_UNIT" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ID_ITEM_NF" Type="number" Precision="38" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ST_ITEM" Type="number" Precision="38" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NOTA_FISCAL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="38" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID_CLIENTE" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="CD_NOTA" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="DATACRIACAO" Type="timestamp" Precision="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRODUTO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="number" Precision="38" Scale="0" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NOME" Type="varchar2" MaxLength="50" Nullable="false" />
+          <Property Name="VALOR_UNIT" Type="number" Precision="38" Scale="0" Nullable="false" />
+          <Property Name="ID_CATEGORIA_PROD" Type="number" Precision="38" Scale="0" />
+          <Property Name="DATACRIACAO" Type="timestamp" Precision="6" />
+          <Property Name="DATAALTERACAO" Type="timestamp" Precision="6" />
+          <Property Name="ID_IMAGEM" Type="number" Precision="38" Scale="0" />
+        </EntityType>
+        <Association Name="ITEM_NF_FK1">
+          <End Role="NOTA_FISCAL" Type="Self.NOTA_FISCAL" Multiplicity="1" />
+          <End Role="ITEM_NF" Type="Self.ITEM_NF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NOTA_FISCAL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ITEM_NF">
+              <PropertyRef Name="ID_NF" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ITEM_NF_FK2">
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="1" />
+          <End Role="ITEM_NF" Type="Self.ITEM_NF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ITEM_NF">
+              <PropertyRef Name="ID_PRODUTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="NOTA_FISCAL_FK22">
+          <End Role="CLIENTE" Type="Self.CLIENTE" Multiplicity="1" />
+          <End Role="NOTA_FISCAL" Type="Self.NOTA_FISCAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="NOTA_FISCAL">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PRODUTO_FK1">
+          <End Role="CATEGORIA_PRODUTO" Type="Self.CATEGORIA_PRODUTO" Multiplicity="0..1" />
+          <End Role="PRODUTO" Type="Self.PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA_PRODUTO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUTO">
+              <PropertyRef Name="ID_CATEGORIA_PROD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ContextStoreContainer">
+          <EntitySet Name="ADMIN_USERS" EntityType="Self.ADMIN_USERS" Schema="ABTRA_OWNER" store:Type="Tables" />
+          <EntitySet Name="CATEGORIA_PRODUTO" EntityType="Self.CATEGORIA_PRODUTO" Schema="ABTRA_OWNER" store:Type="Tables" />
+          <EntitySet Name="CLIENTE" EntityType="Self.CLIENTE" Schema="ABTRA_OWNER" store:Type="Tables" />
+          <EntitySet Name="IMG_PRODUTO" EntityType="Self.IMG_PRODUTO" Schema="ABTRA_OWNER" store:Type="Tables" />
+          <EntitySet Name="ITEM_NF" EntityType="Self.ITEM_NF" Schema="ABTRA_OWNER" store:Type="Tables" />
+          <EntitySet Name="NOTA_FISCAL" EntityType="Self.NOTA_FISCAL" Schema="ABTRA_OWNER" store:Type="Tables" />
+          <EntitySet Name="PRODUTO" EntityType="Self.PRODUTO" Schema="ABTRA_OWNER" store:Type="Tables" />
+          <AssociationSet Name="ITEM_NF_FK1" Association="Self.ITEM_NF_FK1">
+            <End Role="NOTA_FISCAL" EntitySet="NOTA_FISCAL" />
+            <End Role="ITEM_NF" EntitySet="ITEM_NF" />
+          </AssociationSet>
+          <AssociationSet Name="ITEM_NF_FK2" Association="Self.ITEM_NF_FK2">
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+            <End Role="ITEM_NF" EntitySet="ITEM_NF" />
+          </AssociationSet>
+          <AssociationSet Name="NOTA_FISCAL_FK22" Association="Self.NOTA_FISCAL_FK22">
+            <End Role="CLIENTE" EntitySet="CLIENTE" />
+            <End Role="NOTA_FISCAL" EntitySet="NOTA_FISCAL" />
+          </AssociationSet>
+          <AssociationSet Name="PRODUTO_FK1" Association="Self.PRODUTO_FK1">
+            <End Role="CATEGORIA_PRODUTO" EntitySet="CATEGORIA_PRODUTO" />
+            <End Role="PRODUTO" EntitySet="PRODUTO" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Context" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ProjectContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ADMIN_USERS" EntityType="Context.ADMIN_USERS" />
+          <EntitySet Name="CATEGORIA_PRODUTO" EntityType="Context.CATEGORIA_PRODUTO" />
+          <EntitySet Name="CLIENTEs" EntityType="Context.CLIENTE" />
+          <EntitySet Name="IMG_PRODUTO" EntityType="Context.IMG_PRODUTO" />
+          <EntitySet Name="ITEM_NF" EntityType="Context.ITEM_NF" />
+          <EntitySet Name="NOTA_FISCAL" EntityType="Context.NOTA_FISCAL" />
+          <EntitySet Name="PRODUTOes" EntityType="Context.PRODUTO" />
+          <AssociationSet Name="PRODUTO_FK1" Association="Context.PRODUTO_FK1">
+            <End Role="CATEGORIA_PRODUTO" EntitySet="CATEGORIA_PRODUTO" />
+            <End Role="PRODUTO" EntitySet="PRODUTOes" />
+          </AssociationSet>
+          <AssociationSet Name="NOTA_FISCAL_FK22" Association="Context.NOTA_FISCAL_FK22">
+            <End Role="CLIENTE" EntitySet="CLIENTEs" />
+            <End Role="NOTA_FISCAL" EntitySet="NOTA_FISCAL" />
+          </AssociationSet>
+          <AssociationSet Name="ITEM_NF_FK1" Association="Context.ITEM_NF_FK1">
+            <End Role="NOTA_FISCAL" EntitySet="NOTA_FISCAL" />
+            <End Role="ITEM_NF" EntitySet="ITEM_NF" />
+          </AssociationSet>
+          <AssociationSet Name="ITEM_NF_FK2" Association="Context.ITEM_NF_FK2">
+            <End Role="PRODUTO" EntitySet="PRODUTOes" />
+            <End Role="ITEM_NF" EntitySet="ITEM_NF" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ADMIN_USERS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOME" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FUNCAO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="STATUS" Type="Int16" />
+          <Property Name="DATACRIACAO" Type="DateTime" Nullable="false" Precision="6" />
+          <Property Name="DATAALTERACAO" Type="DateTime" Precision="6" />
+          <Property Name="USER_LOGIN" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SENHA_LOGIN" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CATEGORIA_PRODUTO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOME_CATEGORIA" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="STATUS" Type="Int16" Nullable="false" />
+          <Property Name="DATACRIACAO" Type="DateTime" Nullable="false" Precision="6" />
+          <Property Name="DATAALTERACAO" Type="DateTime" Precision="6" />
+          <NavigationProperty Name="PRODUTOes" Relationship="Context.PRODUTO_FK1" FromRole="CATEGORIA_PRODUTO" ToRole="PRODUTO" />
+        </EntityType>
+        <EntityType Name="CLIENTE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ENDERECO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CEP" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="BAIRRO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CIDADE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UF" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="TELEFONE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="USUARIO" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SENHA" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="NOTA_FISCAL" Relationship="Context.NOTA_FISCAL_FK22" FromRole="CLIENTE" ToRole="NOTA_FISCAL" />
+        </EntityType>
+        <EntityType Name="IMG_PRODUTO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IMAGEM" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="DESCRICAO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ITEM_NF">
+          <Key>
+            <PropertyRef Name="ID_ITEM_NF" />
+          </Key>
+          <Property Name="ID_NF" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="ID_PRODUTO" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="VALOR_UNIT" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="ID_ITEM_NF" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ST_ITEM" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <NavigationProperty Name="NOTA_FISCAL" Relationship="Context.ITEM_NF_FK1" FromRole="ITEM_NF" ToRole="NOTA_FISCAL" />
+          <NavigationProperty Name="PRODUTO" Relationship="Context.ITEM_NF_FK2" FromRole="ITEM_NF" ToRole="PRODUTO" />
+        </EntityType>
+        <EntityType Name="NOTA_FISCAL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_CLIENTE" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="CD_NOTA" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="DATACRIACAO" Type="DateTime" Nullable="false" Precision="6" />
+          <NavigationProperty Name="CLIENTE" Relationship="Context.NOTA_FISCAL_FK22" FromRole="NOTA_FISCAL" ToRole="CLIENTE" />
+          <NavigationProperty Name="ITEM_NF" Relationship="Context.ITEM_NF_FK1" FromRole="NOTA_FISCAL" ToRole="ITEM_NF" />
+        </EntityType>
+        <EntityType Name="PRODUTO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Decimal" Nullable="false" Precision="38" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VALOR_UNIT" Type="Decimal" Nullable="false" Precision="38" Scale="0" />
+          <Property Name="ID_CATEGORIA_PROD" Type="Decimal" Precision="38" Scale="0" />
+          <Property Name="DATACRIACAO" Type="DateTime" Precision="6" />
+          <Property Name="DATAALTERACAO" Type="DateTime" Precision="6" />
+          <Property Name="ID_IMAGEM" Type="Decimal" Precision="38" Scale="0" />
+          <NavigationProperty Name="CATEGORIA_PRODUTO" Relationship="Context.PRODUTO_FK1" FromRole="PRODUTO" ToRole="CATEGORIA_PRODUTO" />
+          <NavigationProperty Name="ITEM_NF" Relationship="Context.ITEM_NF_FK2" FromRole="PRODUTO" ToRole="ITEM_NF" />
+        </EntityType>
+        <Association Name="PRODUTO_FK1">
+          <End Type="Context.CATEGORIA_PRODUTO" Role="CATEGORIA_PRODUTO" Multiplicity="0..1" />
+          <End Type="Context.PRODUTO" Role="PRODUTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA_PRODUTO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUTO">
+              <PropertyRef Name="ID_CATEGORIA_PROD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="NOTA_FISCAL_FK22">
+          <End Type="Context.CLIENTE" Role="CLIENTE" Multiplicity="1" />
+          <End Type="Context.NOTA_FISCAL" Role="NOTA_FISCAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="NOTA_FISCAL">
+              <PropertyRef Name="ID_CLIENTE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ITEM_NF_FK1">
+          <End Type="Context.NOTA_FISCAL" Role="NOTA_FISCAL" Multiplicity="1" />
+          <End Type="Context.ITEM_NF" Role="ITEM_NF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NOTA_FISCAL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ITEM_NF">
+              <PropertyRef Name="ID_NF" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ITEM_NF_FK2">
+          <End Type="Context.PRODUTO" Role="PRODUTO" Multiplicity="1" />
+          <End Type="Context.ITEM_NF" Role="ITEM_NF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUTO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ITEM_NF">
+              <PropertyRef Name="ID_PRODUTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ContextStoreContainer" CdmEntityContainer="ProjectContext">
+          <EntitySetMapping Name="ADMIN_USERS">
+            <EntityTypeMapping TypeName="Context.ADMIN_USERS">
+              <MappingFragment StoreEntitySet="ADMIN_USERS">
+                <ScalarProperty Name="SENHA_LOGIN" ColumnName="SENHA_LOGIN" />
+                <ScalarProperty Name="USER_LOGIN" ColumnName="USER_LOGIN" />
+                <ScalarProperty Name="DATAALTERACAO" ColumnName="DATAALTERACAO" />
+                <ScalarProperty Name="DATACRIACAO" ColumnName="DATACRIACAO" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="FUNCAO" ColumnName="FUNCAO" />
+                <ScalarProperty Name="NOME" ColumnName="NOME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORIA_PRODUTO">
+            <EntityTypeMapping TypeName="Context.CATEGORIA_PRODUTO">
+              <MappingFragment StoreEntitySet="CATEGORIA_PRODUTO">
+                <ScalarProperty Name="DATAALTERACAO" ColumnName="DATAALTERACAO" />
+                <ScalarProperty Name="DATACRIACAO" ColumnName="DATACRIACAO" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="NOME_CATEGORIA" ColumnName="NOME_CATEGORIA" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CLIENTEs">
+            <EntityTypeMapping TypeName="Context.CLIENTE">
+              <MappingFragment StoreEntitySet="CLIENTE">
+                <ScalarProperty Name="SENHA" ColumnName="SENHA" />
+                <ScalarProperty Name="USUARIO" ColumnName="USUARIO" />
+                <ScalarProperty Name="TELEFONE" ColumnName="TELEFONE" />
+                <ScalarProperty Name="UF" ColumnName="UF" />
+                <ScalarProperty Name="CIDADE" ColumnName="CIDADE" />
+                <ScalarProperty Name="BAIRRO" ColumnName="BAIRRO" />
+                <ScalarProperty Name="CEP" ColumnName="CEP" />
+                <ScalarProperty Name="ENDERECO" ColumnName="ENDERECO" />
+                <ScalarProperty Name="NOME" ColumnName="NOME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IMG_PRODUTO">
+            <EntityTypeMapping TypeName="Context.IMG_PRODUTO">
+              <MappingFragment StoreEntitySet="IMG_PRODUTO">
+                <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+                <ScalarProperty Name="IMAGEM" ColumnName="IMAGEM" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ITEM_NF">
+            <EntityTypeMapping TypeName="Context.ITEM_NF">
+              <MappingFragment StoreEntitySet="ITEM_NF">
+                <ScalarProperty Name="ST_ITEM" ColumnName="ST_ITEM" />
+                <ScalarProperty Name="ID_ITEM_NF" ColumnName="ID_ITEM_NF" />
+                <ScalarProperty Name="VALOR_UNIT" ColumnName="VALOR_UNIT" />
+                <ScalarProperty Name="ID_PRODUTO" ColumnName="ID_PRODUTO" />
+                <ScalarProperty Name="ID_NF" ColumnName="ID_NF" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NOTA_FISCAL">
+            <EntityTypeMapping TypeName="Context.NOTA_FISCAL">
+              <MappingFragment StoreEntitySet="NOTA_FISCAL">
+                <ScalarProperty Name="DATACRIACAO" ColumnName="DATACRIACAO" />
+                <ScalarProperty Name="CD_NOTA" ColumnName="CD_NOTA" />
+                <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUTOes">
+            <EntityTypeMapping TypeName="Context.PRODUTO">
+              <MappingFragment StoreEntitySet="PRODUTO">
+                <ScalarProperty Name="ID_IMAGEM" ColumnName="ID_IMAGEM" />
+                <ScalarProperty Name="DATAALTERACAO" ColumnName="DATAALTERACAO" />
+                <ScalarProperty Name="DATACRIACAO" ColumnName="DATACRIACAO" />
+                <ScalarProperty Name="ID_CATEGORIA_PROD" ColumnName="ID_CATEGORIA_PROD" />
+                <ScalarProperty Name="VALOR_UNIT" ColumnName="VALOR_UNIT" />
+                <ScalarProperty Name="NOME" ColumnName="NOME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

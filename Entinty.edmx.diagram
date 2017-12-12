@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="655a6c55d8af4bc3b4a685425745d987" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="Context.ADMIN_USERS" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Context.CATEGORIA_PRODUTO" Width="1.5" PointX="0.75" PointY="1.25" />
+        <EntityTypeShape EntityType="Context.CLIENTE" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Context.IMG_PRODUTO" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Context.ITEM_NF" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="Context.NOTA_FISCAL" Width="1.5" PointX="3" PointY="5.25" />
+        <EntityTypeShape EntityType="Context.PRODUTO" Width="1.5" PointX="3" PointY="1" />
+        <AssociationConnector Association="Context.PRODUTO_FK1" />
+        <AssociationConnector Association="Context.NOTA_FISCAL_FK22" />
+        <AssociationConnector Association="Context.ITEM_NF_FK1" />
+        <AssociationConnector Association="Context.ITEM_NF_FK2" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
